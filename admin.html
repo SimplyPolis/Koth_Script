@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdn.socket.io/4.7.5/socket.io.min.js" integrity="sha384-2huaZvOR9iDzHqslqwpR87isEmrfxqyWOF7hr7BY6KG0+hVKLoEXMPUJw3ynWuhO" crossorigin="anonymous"></script>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<link rel="stylesheet" href="static/admin.css" type="text/css">
+<body>
+<div class="display">
+    <span class="points" id="team1_points">0</span><span class="name" id="team1_name"></span><span
+        id="time">15:00</span><span class="name" id="team2_name"></span><span class="points"
+                                                                                  id="team2_points">0</span>
+<span class="status" id="status">STATUS</span>
+</div>
+<div class="buttons">
+<input id="startButton" type="button" value="Start Match" onclick="startGame();" />
+<input id="pauseButton" type="button" value="Pause Match" onclick="pauseGame();" />
+<input id="recheckButton" type="button" value="Fix Score" onclick="recheckGame();" />
+<input id="resetButton" type="button" value="Reset Match" onclick="resetGame();" />
+</div>
+
+</body>
+
+
+<script>
+    const status= ["IMMINENT", "UNDERWAY", "PAUSED", "OVERTIME", "RESOLVED"]
+    const factions = ["NULL", "VS", "NC", "TR", "NSO"]
+    function swapFaction(name, faction) {
+        if (name.hasClass(faction)) {
+            return;
+        } else {
+            name.removeClass("TR");
+            name.removeClass("VS");
+            name.removeClass("NS");
+            name.addClass(faction)
+        }
+    }
+
+
+    //const ws = new io(`ws://${window.location.host}`);
+    const socket=new io(`${window.location.host}`)
+    socket.on("game_score",(msg) => {
+        console.log(msg)
+
+
+
+});
+    function startGame() {
+        socket.emit("game_score_start");
+      }
+      function pauseGame() {
+        socket.emit("game_score_pause");
+      }
+       function resetGame() {
+        socket.emit("game_score_reset");
+      }
+      function recheckGame() {
+        socket.emit("game_score_recheck");
+      }
+    // ws.on = ("game",function(data) {
+    //     console.log("here");
+    //     console.log(data);
+    //
+    //
+    //
+    // });
+
+
+</script>
+</html>

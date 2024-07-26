@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdn.socket.io/4.7.5/socket.io.min.js" integrity="sha384-2huaZvOR9iDzHqslqwpR87isEmrfxqyWOF7hr7BY6KG0+hVKLoEXMPUJw3ynWuhO" crossorigin="anonymous"></script>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<link rel="stylesheet" href="static/overlay.css" type="text/css">
+<body>
+<div class="display">
+    <span class="VS points" id="vs_time"></span><span class="NC points" id="nc_time"></span><span class="TR points" id="tr_time"></span><span
+        id="time">15:00</span>
+
+</body>
+
+
+<script>
+    const status= ["IMMINENT", "UNDERWAY", "PAUSED", "OVERTIME", "RESOLVED"]
+    const factions = ["NULL", "VS", "NC", "TR", "NSO"]
+    function swapFaction(name, faction) {
+        if (name.hasClass(faction)) {
+            return;
+        } else {
+            name.removeClass("TR");
+            name.removeClass("VS");
+            name.removeClass("NS");
+            name.addClass(faction)
+        }
+    }
+
+
+    //const ws = new io(`ws://${window.location.host}`);
+    const socket=new io(`${window.location.host}`)
+    socket.on("game_score",(msg) => {
+        console.log(msg);
+ document.querySelector('#vs_time').textContent = msg["timeVS"];
+        document.querySelector('#nc_time').textContent = msg["timeNC"];
+       document.querySelector('#tr_time').textContent = msg["timeTR"];
+        document.querySelector('#time').textContent = msg["time"]
+
+
+
+});
+
+
+
+</script>
+</html>
