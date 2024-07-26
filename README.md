@@ -1,0 +1,17 @@
+# King of the Hill Cast Overlay
+
+## Dependencies
+
+```sh
+pip install requests auraxium uvicorn python-socketio
+```
+
+## Run
+
+```
+python main.py
+```
+
+If running locally, browse to `http://127.0.0.1:8080`.
+
+Browse to the `/admin` endpoint to start, pause and reset matches.
